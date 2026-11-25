@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dependency-intelligence-agent"
+version = "0.1.0"
+description = "Evidence-grounded dependency upgrade impact analyzer"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "httpx>=0.27,<1",
+  "langgraph>=0.2,<2",
+  "packaging>=24,<27",
+  "pydantic>=2.9,<3",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.2,<2"]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-asyncio>=0.24,<2",
+  "respx>=0.22,<1",
+]
+
+[project.scripts]
+dependency-intelligence = "app.cli:main"
+dependency-intelligence-mcp = "app.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
